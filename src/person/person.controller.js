@@ -7,7 +7,6 @@ exports.createPerson = async (req, res) => {
 
   res.status(201).json({
     status: true,
-    message: "Person created successfully",
     savedPerson: newPerson,
   });
 };
