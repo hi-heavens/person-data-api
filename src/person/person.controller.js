@@ -11,3 +11,14 @@ exports.createPerson = async (req, res) => {
     savedPerson: newPerson,
   });
 };
+
+exports.getPerson = async (req, res) => {
+  let query = Person.findById(req.params.id);
+  query = query.select("-__v");
+  const person = await query;
+
+  res.status(200).json({
+    status: true,
+    person,
+  });
+};
