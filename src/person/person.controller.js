@@ -22,3 +22,22 @@ exports.getPerson = async (req, res) => {
     person,
   });
 };
+
+exports.updatePerson = async (req, res) => {
+  const updatedPerson = await Person.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  return res.status(200).json({
+    status: true,
+    updatedPerson,
+  });
+};
+
+exports.deletePerson = async (req, res) => {
+  await Person.findByIdAndDelete(req.params.id);
+
+  res.status(204).json();
+};
