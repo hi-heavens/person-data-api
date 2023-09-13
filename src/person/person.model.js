@@ -4,6 +4,7 @@ const personSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please, provide a valid name"],
+    unique: true,
   },
   age: {
     type: Number,
