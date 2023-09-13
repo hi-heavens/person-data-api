@@ -1,9 +1,17 @@
 const mongoose = require("mongoose");
 const Person = require("./person.model");
 const catchAsync = require("../services/catchAsync");
+const AppError = require("../services/AppError");
+const personValidate = require("../services/personValidate");
 
-exports.createPerson = catchAsync(async (req, res) => {
-  const person = new Person(req.body);
+exports.createPerson = catchAsync(async (req, res, next) => {
+  const { error, value } = personValidate.validate(req.body);
+
+  if (error) {
+    return next(new AppError(error.details[0].message, 400));
+  }
+
+  const person = new Person(value);
 
   const newPerson = await person.save();
 
@@ -13,7 +21,7 @@ exports.createPerson = catchAsync(async (req, res) => {
   });
 });
 
-exports.getPerson = catchAsync(async (req, res) => {
+exports.getPerson = catchAsync(async (req, res, next) => {
   let identifier = req.params.id;
   let query;
   if (mongoose.Types.ObjectId.isValid(identifier)) {
