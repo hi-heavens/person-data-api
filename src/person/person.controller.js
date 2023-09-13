@@ -40,7 +40,7 @@ exports.getPerson = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updatePerson = catchAsync(async (req, res) => {
+exports.updatePerson = catchAsync(async (req, res, next) => {
   let param = req.params.id;
   let query;
   if (mongoose.Types.ObjectId.isValid(param)) {
@@ -61,7 +61,7 @@ exports.updatePerson = catchAsync(async (req, res) => {
   });
 });
 
-exports.deletePerson = catchAsync(async (req, res) => {
+exports.deletePerson = catchAsync(async (req, res, next) => {
   const param = req.params.id;
   const isId = mongoose.Types.ObjectId.isValid(param);
   const query = isId
